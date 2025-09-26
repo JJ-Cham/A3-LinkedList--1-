@@ -14,7 +14,7 @@ _**YES**____ 2 pt: Phase 1 methods implemented for singly linked list
 
 _____ 1 pt: Passes all phase 1 tests for singly linked list
 
-_____ 2 pt: Phase 2 methods implemented for singly linked list
+_**YES**____ 2 pt: Phase 2 methods implemented for singly linked list
 
 _____ 1 pt: Passes all phase 2 tests for singly linked list
 
