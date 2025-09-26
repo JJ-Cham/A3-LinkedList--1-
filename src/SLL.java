@@ -1,3 +1,5 @@
+import java.lang.classfile.components.ClassPrinter.Node;
+
 /**
  * Class to implement a singly linked list
  *
@@ -5,7 +7,7 @@
  * @version Spring 2024
  */
 
- public class SLL<T> implements Phase1SLL<T> {
+ public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T> {
 
     private NodeSL<T>head; // head of the list, points to the first node in the list
     private int size; // number of elements in the list
@@ -68,32 +70,74 @@
     //Phase 2
     @Override
     public void addLast(T v) { 
-        throw new UnsupportedOperationException("Phase 2 not yet implemented");
+        NodeSL<T> newNode = new NodeSL<>(v, null);
+        if (head == null) {
+            head = newNode;
+        } 
+        else {
+            NodeSL<T> current = head;
+            while (current.getNext() != null) {
+                current = current.getNext();
+            }
+            current.setNext(newNode);
+        }
     }
 
     @Override
     public void addAfter(NodeSL<T> here, T v) { 
-        throw new UnsupportedOperationException("Phase 2 not yet implemented");
+        if (here == null) return; // cannot add after a null node
+        NodeSL<T> newNode = new NodeSL<>(v, here.getNext());
+        here.setNext(newNode);
+        //size++;?
     }
 
     @Override
     public T removeFirst() { 
-        throw new UnsupportedOperationException("Phase 2 not yet implemented");
+        if (head == null) return null; // empty list
+
+        T data = head.getData();
+        head = head.getNext();
+        return data;
     }
 
     @Override
     public T removeLast() { 
-        throw new UnsupportedOperationException("Phase 2 not yet implemented");
+        if (head == null) return null;
+
+        if(head.getNext() == null){
+            T data = head.getData();
+            head = null;
+            return data;
+        }
+        NodeSL<T> current = head;
+        while (current.getNext().getNext() != null) {
+            current = current.getNext();
+        }
+        T data = current.getNext().getData();
+        current.setNext(null);
+        return data;
     }
 
     @Override
     public T removeAfter(NodeSL<T> here) { 
-        throw new UnsupportedOperationException("Phase 2 not yet implemented");
+        if (here == null || here.getNext() == null) return null; // cannot remove after a null node or if there is no next node
+
+        NodeSL<T> temp = here.getNext();
+
+        T data = temp.getData();
+        here.setNext(temp.getNext());
+        return data;
     }
 
     @Override
     public int size() { 
-        return size; // you already keep track of size
+        int size = 0;
+        NodeSL<T> current = head;
+        while (current != null) {
+            size++;
+            current = current.getNext();
+        }
+        return size; 
     }
 
   
