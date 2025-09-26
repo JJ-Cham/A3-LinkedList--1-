@@ -10,6 +10,7 @@
     private NodeSL<T>head; // head of the list, points to the first node in the list
     private int size; // number of elements in the list
 
+    //Phase 1 methods only
     //constructor 
     public SLL(){
         this.head = null;
@@ -63,5 +64,37 @@
         head = newNode;
         size++;
     }
+
+    //Phase 2
+    @Override
+    public void addLast(T v) { 
+        throw new UnsupportedOperationException("Phase 2 not yet implemented");
+    }
+
+    @Override
+    public void addAfter(NodeSL<T> here, T v) { 
+        throw new UnsupportedOperationException("Phase 2 not yet implemented");
+    }
+
+    @Override
+    public T removeFirst() { 
+        throw new UnsupportedOperationException("Phase 2 not yet implemented");
+    }
+
+    @Override
+    public T removeLast() { 
+        throw new UnsupportedOperationException("Phase 2 not yet implemented");
+    }
+
+    @Override
+    public T removeAfter(NodeSL<T> here) { 
+        throw new UnsupportedOperationException("Phase 2 not yet implemented");
+    }
+
+    @Override
+    public int size() { 
+        return size; // you already keep track of size
+    }
+
   
  }
