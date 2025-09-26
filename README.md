@@ -4,19 +4,19 @@ Your readme should include the following information. **Each student** needs to 
 
 ## Submission Details
 
-Programming Partner Name (if you are submitting identical code):
+Programming Partner Name (if you are submitting identical code):N/A
 
 
-Other Collaborators (submitting related but non-identical code):
+Other Collaborators (submitting related but non-identical code):N/A
 
 
-Kudos/shout-out to particularly helpful members of the class or teaching staff:
+Kudos/shout-out to particularly helpful members of the class or teaching staff:N/A
 
 
-Any references used besides JavaDoc and course materials:
+Any references used besides JavaDoc and course materials:N/A
 
 
-If you used AI, please describe how and the interaction between AI and your understanding of this assignment and specifically the related data structures and algorithms:
+If you used AI, please describe how and the interaction between AI and your understanding of this assignment and specifically the related data structures and algorithms: N/A
 
 ## Reflection
 

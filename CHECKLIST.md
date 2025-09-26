@@ -1,5 +1,5 @@
 # CSC 210 Data Structures
-## Assignment 7 Checklist
+## Assignment A3 Checklist
 
 Listed below are various aspects of the assignment.  When you turn in
 your work, please indicate the status of each item
