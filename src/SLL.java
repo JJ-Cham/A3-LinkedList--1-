@@ -5,7 +5,7 @@
  * @version Spring 2024
  */
 
-public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T> {
+public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T>, Phase4SLL<T> {
 
     private NodeSL<T> head; // first node in the list
 
@@ -146,14 +146,106 @@ public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T> {
     }
 
     // ---------------- Phase 4 ----------------
+    /**
+     * Makes a copy of n elements starting from "here"
+     */
+    @Override
+    public SLL<T> subseqByCopy(NodeSL<T> here, int n) {
+        if (here == null || n < 0) {
+            throw new MissingElementException();
+        }
 
-    //deep copy constructor
-    //making a new list and copying over the elements from other list
-    public SLL(SLL<T> other) {
-        
+        SLL<T> result = new SLL<>();
+        NodeSL<T> current = here;
 
+        for (int i = 0; i < n; i++) {
+            if (current == null) {
+                throw new MissingElementException(); // not enough elements
+            }
+            result.addLast(current.getData());
+            current = current.getNext();
+        }
 
+        return result;
     }
+
+    /**
+     * Places a copy of another list after "afterHere"
+     */
+    @Override
+    public void spliceByCopy(SLL<T> list, NodeSL<T> afterHere) {
+        if (list == null || list.isEmpty()) return;
+        if (afterHere == null) {
+            throw new MissingElementException(null);
+        }
+        if (this == list) {
+            throw new SelfInsertException();
+        }
+
+        // Make a copy of list
+        SLL<T> copy = new SLL<>();
+
+        // Splice copy after afterHere
+        NodeSL<T> after = afterHere.getNext();
+        afterHere.setNext(copy.getHead());
+        copy.getTail().setNext(after);
+    }
+
+    /**
+     * Extracts a subsequence of nodes and transfers them into a new list
+     */
+    @Override
+    public SLL<T> subseqByTransfer(NodeSL<T> afterHere, NodeSL<T> toHere) {
+        if (afterHere == null || afterHere.getNext() == null) {
+            throw new MissingElementException(null);
+        }
+
+        SLL<T> result = new SLL<>();
+
+        NodeSL<T> start = afterHere.getNext(); // first node being moved
+        NodeSL<T> end = start;
+
+        // Walk until we reach toHere
+        while (end != null && end != toHere) {
+            end = end.getNext();
+        }
+
+        if (end == null) {
+            throw new MissingElementException(null); // toHere not found
+        }
+
+        // Detach [start ... toHere] from this list
+        afterHere.setNext(toHere.getNext());
+
+        // Hook into result list
+        result.head = start;
+        toHere.setNext(null);
+
+        return result;
+    }
+
+    /**
+     * Splices another list into this one after afterHere, emptying the other list
+     */
+    @Override
+    public void spliceByTransfer(SLL<T> list, NodeSL<T> afterHere) {
+        if (list == null || list.isEmpty()) return;
+        if (afterHere == null) {
+            throw new MissingElementException(null);
+        }
+        if (this == list) {
+            throw new SelfInsertException();
+        }
+
+        NodeSL<T> after = afterHere.getNext();
+        afterHere.setNext(list.getHead());
+        list.getTail().setNext(after);
+
+        // Empty out list
+        list.head = null;
+    }
+
+
 }
 
 
