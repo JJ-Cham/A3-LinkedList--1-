@@ -7,20 +7,27 @@
 
 public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T> {
 
-    private NodeSL<T> head; // head of the list, points to the first node in the list
-    private int size; // number of elements in the list
+    private NodeSL<T> head; // first node in the list
 
-    // Phase 1 methods only
+    // Constructor: empty list
     public SLL() {
-        this.head = null;
-        this.size = 0;
+        head = null;
     }
 
+    // ---------------- Phase 1 ----------------
+    // Is the list empty?
+    @Override
+    public boolean isEmpty() {
+        return head == null;
+    }
+
+    // Get the first node (head)
     @Override
     public NodeSL<T> getHead() {
         return head;
     }
 
+    // Get the last node (tail)
     @Override
     public NodeSL<T> getTail() {
         if (head == null) return null;
@@ -31,97 +38,121 @@ public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T> {
         return current;
     }
 
+    // Add a new element at the front
+    @Override
+    public void addFirst(T v) {
+        NodeSL<T> newNode = new NodeSL<>(v, head);
+        head = newNode;
+    }
+
+    // Return string representation of the list
     @Override
     public String toString() {
-        if (head == null) return "[]";
-        StringBuilder sb = new StringBuilder("[");
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
         NodeSL<T> current = head;
-        while (current.getNext() != null) {
-            sb.append(current.getData()).append(",");
+
+        while (current != null) {
+            sb.append(current.getData());
+            if (current.getNext() != null) {
+                sb.append(", ");
+            }
             current = current.getNext();
         }
-        sb.append(current.getData()).append("]");
+
+        sb.append("]");
         return sb.toString();
     }
 
+    // ---------------- Phase 2 & 3 ----------------
+
+    // Remove first node and return its value
     @Override
-    public boolean isEmpty() {
-        return head == null;
+    public T removeFirst() {
+        if (head == null) {
+            //return null; // later Phase 3: throw exception
+            throw new MissingElementException(null);
+        }
+        T value = head.getData();
+        head = head.getNext();
+        return value;
     }
 
-    @Override
-    public void addFirst(T data) {
-        NodeSL<T> newNode = new NodeSL<>(data, head);
-        head = newNode;
-        size++;
-    }
-
-    // Phase 2
+    // Add new node at the end
     @Override
     public void addLast(T v) {
         NodeSL<T> newNode = new NodeSL<>(v, null);
         if (head == null) {
             head = newNode;
         } else {
-            NodeSL<T> current = head;
-            while (current.getNext() != null) {
-                current = current.getNext();
-            }
-            current.setNext(newNode);
+            NodeSL<T> tail = getTail();
+            tail.setNext(newNode);
         }
-        size++;
     }
 
-    @Override
-    public void addAfter(NodeSL<T> here, T v) {
-        if (here == null) return;
-        NodeSL<T> newNode = new NodeSL<>(v, here.getNext());
-        here.setNext(newNode);
-        size++;
-    }
-
-    @Override
-    public T removeFirst() {
-        if (head == null) return null;
-        T data = head.getData();
-        head = head.getNext();
-        size--;
-        return data;
-    }
-
+    // Remove last node and return its value
     @Override
     public T removeLast() {
-        if (head == null) return null;
-        if (head.getNext() == null) {
-            T data = head.getData();
+        if (head == null) {
+            //return null; // later: throw exception
+            throw new MissingElementException(null);
+        }
+        if (head.getNext() == null) { // only one node
+            T value = head.getData();
             head = null;
-            size--;
-            return data;
+            return value;
         }
         NodeSL<T> current = head;
         while (current.getNext().getNext() != null) {
             current = current.getNext();
         }
-        T data = current.getNext().getData();
+        T value = current.getNext().getData();
         current.setNext(null);
-        size--;
-        return data;
+        return value;
     }
 
+    // Add new node after a given node
+    @Override
+    public void addAfter(NodeSL<T> here, T v) {
+        if (here == null){
+            throw new MissingElementException(null);
+        } //return; // later: maybe exception
+        NodeSL<T> newNode = new NodeSL<>(v, here.getNext());
+        here.setNext(newNode);
+    }
+
+    // Remove node after a given node
     @Override
     public T removeAfter(NodeSL<T> here) {
-        if (here == null || here.getNext() == null)
-            throw new MissingElementException("No element to remove after this node.");
-        NodeSL<T> temp = here.getNext();
-        T data = temp.getData();
-        here.setNext(temp.getNext());
-        size--;
-        return data;
+        if (here == null || here.getNext() == null) {
+            //return null; // later: throw exception
+            throw new MissingElementException(null);
+        }
+        NodeSL<T> toRemove = here.getNext();
+        here.setNext(toRemove.getNext());
+        return toRemove.getData();
     }
 
+    // Count nodes
     @Override
     public int size() {
-        return size;
+        int count = 0;
+        NodeSL<T> current = head;
+        while (current != null) {
+            count++;
+            current = current.getNext();
+        }
+        return count;
+    }
+
+    // ---------------- Phase 4 ----------------
+
+    //deep copy constructor
+    //making a new list and copying over the elements from other list
+    public SLL(SLL<T> other) {
+        
+
+
     }
 }
 
