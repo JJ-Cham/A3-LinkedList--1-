@@ -71,7 +71,7 @@ public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T>, Phase4SLL<T> {
     public T removeFirst() {
         if (head == null) {
             //return null; // later Phase 3: throw exception
-            throw new MissingElementException(null);
+            throw new MissingElementException("Not enough elements in list");
         }
         T value = head.getData();
         head = head.getNext();
@@ -95,7 +95,7 @@ public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T>, Phase4SLL<T> {
     public T removeLast() {
         if (head == null) {
             //return null; // later: throw exception
-            throw new MissingElementException(null);
+            throw new MissingElementException("Not enough elements in list");
         }
         if (head.getNext() == null) { // only one node
             T value = head.getData();
@@ -115,7 +115,7 @@ public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T>, Phase4SLL<T> {
     @Override
     public void addAfter(NodeSL<T> here, T v) {
         if (here == null){
-            throw new MissingElementException(null);
+            throw new MissingElementException("Not enough elements in list");
         } //return; // later: maybe exception
         NodeSL<T> newNode = new NodeSL<>(v, here.getNext());
         here.setNext(newNode);
@@ -126,7 +126,7 @@ public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T>, Phase4SLL<T> {
     public T removeAfter(NodeSL<T> here) {
         if (here == null || here.getNext() == null) {
             //return null; // later: throw exception
-            throw new MissingElementException(null);
+            throw new MissingElementException("Not enough elements in list");
         }
         NodeSL<T> toRemove = here.getNext();
         here.setNext(toRemove.getNext());
@@ -146,13 +146,26 @@ public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T>, Phase4SLL<T> {
     }
 
     // ---------------- Phase 4 ----------------
+
+    //copy constructor 
+    public SLL(SLL<T> other) {
+        this.head = null;
+        if (other != null && !other.isEmpty()) {
+            NodeSL<T> current = other.getHead();
+            while (current != null) {
+                this.addLast(current.getData());
+                current = current.getNext();
+            }
+        }
+    }
+
     /**
      * Makes a copy of n elements starting from "here"
      */
     @Override
     public SLL<T> subseqByCopy(NodeSL<T> here, int n) {
         if (here == null || n < 0) {
-            throw new MissingElementException();
+            throw new MissingElementException("Not enough elements in list");
         }
 
         SLL<T> result = new SLL<>();
@@ -160,7 +173,7 @@ public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T>, Phase4SLL<T> {
 
         for (int i = 0; i < n; i++) {
             if (current == null) {
-                throw new MissingElementException(); // not enough elements
+                throw new MissingElementException("Not enough elements in list"); // not enough elements
             }
             result.addLast(current.getData());
             current = current.getNext();
@@ -176,7 +189,7 @@ public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T>, Phase4SLL<T> {
     public void spliceByCopy(SLL<T> list, NodeSL<T> afterHere) {
         if (list == null || list.isEmpty()) return;
         if (afterHere == null) {
-            throw new MissingElementException(null);
+            throw new MissingElementException("Not enough elements in list");
         }
         if (this == list) {
             throw new SelfInsertException();
@@ -197,7 +210,7 @@ public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T>, Phase4SLL<T> {
     @Override
     public SLL<T> subseqByTransfer(NodeSL<T> afterHere, NodeSL<T> toHere) {
         if (afterHere == null || afterHere.getNext() == null) {
-            throw new MissingElementException(null);
+            throw new MissingElementException("Not enough elements in list");
         }
 
         SLL<T> result = new SLL<>();
@@ -211,7 +224,7 @@ public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T>, Phase4SLL<T> {
         }
 
         if (end == null) {
-            throw new MissingElementException(null); // toHere not found
+            throw new MissingElementException("Not enough elements in list"); // toHere not found
         }
 
         // Detach [start ... toHere] from this list
@@ -231,7 +244,7 @@ public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T>, Phase4SLL<T> {
     public void spliceByTransfer(SLL<T> list, NodeSL<T> afterHere) {
         if (list == null || list.isEmpty()) return;
         if (afterHere == null) {
-            throw new MissingElementException(null);
+            throw new MissingElementException("Not enough elements in list");
         }
         if (this == list) {
             throw new SelfInsertException();
