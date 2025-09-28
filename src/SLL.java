@@ -4,30 +4,52 @@
  * @author 
  * @version Spring 2024
  */
-
+/**
+ * A basic singly linked list implementation.
+ *
+ * @param <T> the type of elements stored in the list
+ */
 public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T>, Phase4SLL<T> {
 
     private NodeSL<T> head; // first node in the list
 
     // Constructor: empty list
+    /**
+     * Constructs an empty singly linked list.
+     */
     public SLL() {
         head = null;
     }
 
     // ---------------- Phase 1 ----------------
     // Is the list empty?
+    /**
+     * Determines whether the list is empty.
+     *
+     * @return true if the list has no elements, false otherwise
+     */
     @Override
     public boolean isEmpty() {
         return head == null;
     }
 
     // Get the first node (head)
+    /**
+     * Returns the head node of the list.
+     *
+     * @return the first node, or null if the list is empty
+     */
     @Override
     public NodeSL<T> getHead() {
         return head;
     }
 
     // Get the last node (tail)
+    /**
+     * Returns the tail node of the list.
+     *
+     * @return the last node, or null if the list is empty
+     */
     @Override
     public NodeSL<T> getTail() {
         if (head == null) return null;
@@ -39,6 +61,11 @@ public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T>, Phase4SLL<T> {
     }
 
     // Add a new element at the front
+    /**
+     * Inserts a new element at the front of the list.
+     *
+     * @param v the element to insert
+     */
     @Override
     public void addFirst(T v) {
         NodeSL<T> newNode = new NodeSL<>(v, head);
@@ -46,6 +73,11 @@ public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T>, Phase4SLL<T> {
     }
 
     // Return string representation of the list
+    /**
+     * Returns a string representation of the list.
+     *
+     * @return a string containing the list elements in order
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -67,6 +99,12 @@ public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T>, Phase4SLL<T> {
     // ---------------- Phase 2 & 3 ----------------
 
     // Remove first node and return its value
+    /**
+     * Removes the first node and returns its value.
+     *
+     * @return the value of the removed node
+     * @throws MissingElementException if the list is empty
+     */
     @Override
     public T removeFirst() {
         if (head == null) {
@@ -79,6 +117,11 @@ public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T>, Phase4SLL<T> {
     }
 
     // Add new node at the end
+    /**
+     * Inserts a new element at the end of the list.
+     *
+     * @param v the element to insert
+     */
     @Override
     public void addLast(T v) {
         NodeSL<T> newNode = new NodeSL<>(v, null);
@@ -91,6 +134,12 @@ public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T>, Phase4SLL<T> {
     }
 
     // Remove last node and return its value
+    /**
+     * Removes the last node and returns its value.
+     *
+     * @return the value of the removed node
+     * @throws MissingElementException if the list is empty
+     */
     @Override
     public T removeLast() {
         if (head == null) {
@@ -112,6 +161,13 @@ public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T>, Phase4SLL<T> {
     }
 
     // Add new node after a given node
+    /**
+     * Inserts a new element after the given node.
+     *
+     * @param here the node to insert after
+     * @param v the element to insert
+     * @throws MissingElementException if the reference node is null
+     */
     @Override
     public void addAfter(NodeSL<T> here, T v) {
         if (here == null){
@@ -122,6 +178,13 @@ public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T>, Phase4SLL<T> {
     }
 
     // Remove node after a given node
+    /**
+     * Removes the node after the given node and returns its value.
+     *
+     * @param here the node before the one to remove
+     * @return the value of the removed node
+     * @throws MissingElementException if there is no node to remove
+     */
     @Override
     public T removeAfter(NodeSL<T> here) {
         if (here == null || here.getNext() == null) {
@@ -134,6 +197,11 @@ public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T>, Phase4SLL<T> {
     }
 
     // Count nodes
+    /**
+     * Returns the number of elements in the list.
+     *
+     * @return the size of the list
+     */
     @Override
     public int size() {
         int count = 0;
@@ -147,7 +215,12 @@ public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T>, Phase4SLL<T> {
 
     // ---------------- Phase 4 ----------------
 
-    //copy constructor 
+    //copy constructor
+    /**
+     * Constructs a copy of another list.
+     *
+     * @param other the list to copy
+     */ 
     public SLL(SLL<T> other) {
         this.head = null;
         if (other != null && !other.isEmpty()) {
@@ -159,8 +232,15 @@ public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T>, Phase4SLL<T> {
         }
     }
 
+    
+      //Makes a copy of n elements starting from "here"
     /**
-     * Makes a copy of n elements starting from "here"
+     * Creates a new list by copying n elements starting at the given node.
+     *
+     * @param here the starting node
+     * @param n the number of elements to copy
+     * @return a new list containing the copied elements
+     * @throws MissingElementException if not enough elements are available
      */
     @Override
     public SLL<T> subseqByCopy(NodeSL<T> here, int n) {
@@ -182,21 +262,30 @@ public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T>, Phase4SLL<T> {
         return result;
     }
 
+    
+     //Places a copy of another list after "afterHere"
     /**
-     * Places a copy of another list after "afterHere"
+     * Inserts a copy of another list into this one after the given node.
+     *
+     * @param list the list to copy and insert
+     * @param afterHere the node after which to insert
+     * @throws MissingElementException if afterHere is null
+     * @throws SelfInsertException if the list tries to splice itself
      */
     @Override
     public void spliceByCopy(SLL<T> list, NodeSL<T> afterHere) {
-        if (list == null || list.isEmpty()) return;
+        if (list == null || list.isEmpty()) return; //nothing to splice 
         if (afterHere == null) {
-            throw new MissingElementException("Not enough elements in list");
+            throw new MissingElementException("AfterHere is null");
         }
         if (this == list) {
-            throw new SelfInsertException();
+            throw new SelfInsertException();   
         }
 
         // Make a copy of list
-        SLL<T> copy = new SLL<>();
+        SLL<T> copy = new SLL<>(list);
+
+        //if (copy.isEmpty()) return; // nothing to splice
 
         // Splice copy after afterHere
         NodeSL<T> after = afterHere.getNext();
@@ -204,8 +293,16 @@ public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T>, Phase4SLL<T> {
         copy.getTail().setNext(after);
     }
 
+    
+    //Extracts a subsequence of nodes and transfers them into a new list
     /**
-     * Extracts a subsequence of nodes and transfers them into a new list
+     * Extracts a subsequence of nodes between two given nodes and
+     * returns them as a new list.
+     *
+     * @param afterHere the node before the subsequence
+     * @param toHere the last node of the subsequence
+     * @return a new list containing the extracted nodes
+     * @throws MissingElementException if the subsequence cannot be found
      */
     @Override
     public SLL<T> subseqByTransfer(NodeSL<T> afterHere, NodeSL<T> toHere) {
@@ -237,8 +334,16 @@ public class SLL<T> implements Phase1SLL<T>, Phase2SLL<T>, Phase4SLL<T> {
         return result;
     }
 
+    
+    //Splices another list into this one after afterHere, emptying the other list
     /**
-     * Splices another list into this one after afterHere, emptying the other list
+     * Splices another list into this one after the given node.
+     * The other list becomes empty after the operation.
+     *
+     * @param list the list to splice into this one
+     * @param afterHere the node after which to splice
+     * @throws MissingElementException if afterHere is null
+     * @throws SelfInsertException if the list tries to splice itself
      */
     @Override
     public void spliceByTransfer(SLL<T> list, NodeSL<T> afterHere) {
